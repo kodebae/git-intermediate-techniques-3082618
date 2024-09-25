@@ -1,7 +1,6 @@
 # 👾 Git Intermediate Training
 
-### Accompanying technical documentation for the LinkedIn Learning course Git Intermediate Techniques. I will leave the original README.md notes from the course  below. 
-
+### Accompanying technical documentation for the LinkedIn Learning course Git Intermediate Techniques. I will leave the original README.md notes from the course  below. The origional course can be accessed via LinkedIn Learning.
 ---
 
 # Intermediate Git Concepts
