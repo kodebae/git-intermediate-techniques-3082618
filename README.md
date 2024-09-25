@@ -260,6 +260,9 @@ git branch --no-merged
 
 # Example 3: Check merged state between specific branches
 git log --merges main..feature-branch
+
+# Example 4: Identify remote branches that were merged into the current branch
+git branch -r --merged 
 ```
 > **Scenario**: You verify if a branch can be safely deleted after confirming it has been merged.
 
@@ -279,6 +282,9 @@ git fetch --prune
 
 # Example 3: Dry run to see what would be pruned
 git prune --dry-run
+
+# Example 4: Prune a remote branch deleted by a team member
+git remote prune origin
 ```
 > **Scenario**: After deleting branches, you use `git prune` to clean up any remaining loose objects.
 
@@ -300,6 +306,290 @@ git prune --dry-run
 git branch -d feature-branch --dry-run
 ```
 > **Scenario**: Before executing a potentially risky command, you run it with `--dry-run` to preview the outcome.
+
+## 16. `git gc`
+The `git gc` (garbage collection) command is used to clean up unnecessary files and optimize the local repository.
+
+### Code Examples:
+
+```bash
+# Example 1: Run the default garbage collection
+git gc
+
+# Example 2: Aggressively clean up files and optimize the repository
+git gc --aggressive
+
+# Example 3: Simulate garbage collection to preview changes
+git gc --dry-run
+```
+> **Scenario**: After deleting branches or performing many rebase operations, you run `git gc` to clean up unnecessary objects and optimize performance.
+
+---
+
+## 17. Creating tags with `git`
+Tags are used to mark specific points in history, often used for releases or versioning.
+
+### Code Examples:
+
+```bash
+# Example 1: Creating a lightweight tag for version 1.0
+git tag v1.0
+
+# Example 2: Tagging a specific commit
+git tag v1.0 <commit-sha>
+
+# Example 3: Listing all tags in the repository
+git tag
+```
+> **Scenario**: You’re ready to release version 1.0 of your project, and you create a tag to mark the commit.
+
+---
+
+## 18. Creating annotated tags with `-am`
+Annotated tags contain additional metadata like the tagger’s name, email, and date, along with a message. They are used when more detailed version tracking is required.
+
+### Code Examples:
+
+```bash
+# Example 1: Creating an annotated tag with a message
+git tag -a v1.0 -m "Release version 1.0"
+
+# Example 2: Creating an annotated tag for a specific commit
+git tag -a v1.1 -m "Hotfix for issue #42" <commit-sha>
+
+# Example 3: Verifying the details of an annotated tag
+git show v1.0
+```
+> **Scenario**: You’re preparing a formal release and want to add extra details about what’s included in the release via an annotated tag.
+
+---
+
+## 19. Deleting tags
+Tags can be deleted locally and remotely when no longer needed.
+
+### Code Examples:
+
+```bash
+# Example 1: Deleting a local tag
+git tag -d v1.0
+
+# Example 2: Deleting a remote tag
+git push origin --delete v1.0
+
+# Example 3: Delete multiple local tags at once
+git tag -d v1.0 v1.1 v1.2
+```
+> **Scenario**: You made a mistake with a tag name or need to remove an old version tag from both the local and remote repositories.
+
+---
+
+## 20. `git switch`
+`git switch` is an alternative to `git checkout` for switching branches, with a clearer syntax for branch switching.
+
+### Code Examples:
+
+```bash
+# Example 1: Switch to an existing branch
+git switch main
+
+# Example 2: Create and switch to a new branch
+git switch -c feature-branch
+
+# Example 3: Switch to a remote-tracking branch
+git switch origin/feature-branch
+```
+> **Scenario**: You're working on multiple branches and want to quickly switch between them using a simpler syntax.
+
+---
+
+## 21. `git SHA`
+The SHA (Secure Hash Algorithm) in Git is a unique identifier for every commit. It helps track specific commits and allows for precise referencing.
+
+### Code Examples:
+
+```bash
+# Example 1: Viewing the SHA for recent commits
+git log --oneline
+
+# Example 2: Checkout a commit using its SHA
+git checkout <commit-sha>
+
+# Example 3: Referencing a commit SHA in a tag
+git tag v2.0 <commit-sha>
+```
+> **Scenario**: You need to revert your working directory to a specific commit identified by its SHA.
+
+---
+
+## 22. `git --tags`
+The `git --tags` option is used with commands to include tags in their output.
+
+### Code Examples:
+
+```bash
+# Example 1: Fetch tags from the remote repository
+git fetch --tags
+
+# Example 2: List all commits including tags
+git log --tags
+
+# Example 3: Push tags to the remote repository
+git push --tags
+```
+> **Scenario**: You want to ensure that tags are included when fetching changes or listing commit history.
+
+---
+
+## 23. Why and when to create tags
+Tags are useful for marking significant points in a repository's history, like release versions or milestones.
+
+### Code Examples:
+
+```bash
+# Example 1: Tagging a release version
+git tag v1.0
+
+# Example 2: Creating a tag for a milestone in development
+git tag milestone-1
+
+# Example 3: Annotating a tag for better version tracking
+git tag -a v2.0 -m "Major release with new features"
+```
+> **Scenario**: When you release a new version of your project, creating a tag makes it easier to track that specific point in history.
+
+---
+
+## 24. Listing tags with `git tag`
+The `git tag` command lists all tags created in the repository.
+
+### Code Examples:
+
+```bash
+# Example 1: List all tags in the repository
+git tag
+
+# Example 2: List tags that match a pattern (e.g., version numbers)
+git tag -l "v*"
+
+# Example 3: Show details of a specific tag
+git show v1.0
+```
+> **Scenario**: Before releasing a new version, you check the existing tags to ensure there are no duplicate version numbers.
+
+---
+
+## 25. Pushing tags to a remote repository
+Pushing tags ensures that they are available on the remote repository for collaboration and version tracking.
+
+### Code Examples:
+
+```bash
+# Example 1: Pushing a specific tag
+git push origin v1.0
+
+# Example 2: Pushing all tags to the remote repository
+git push --tags
+
+# Example 3: Pushing annotated tags to the remote
+git tag -a v1.1 -m "Annotated release" <commit-sha>
+git push origin v1.1
+```
+> **Scenario**: After tagging a release locally, you push the tags to the remote so collaborators can reference the release.
+
+---
+
+## 26. Fetching tags with `git fetch`
+Fetching tags retrieves them from the remote repository without affecting your local branches.
+
+### Code Examples:
+
+```bash
+# Example 1: Fetching all tags from the remote
+git fetch --tags
+
+# Example 2: Fetch specific tags (if configured for specific branches)
+git fetch origin refs/tags/v1.0
+
+# Example 3: Fetch and merge changes including tags
+git fetch --all --tags
+```
+> **Scenario**: A collaborator pushed new tags, and you fetch them to keep your local repository up to date with the latest version markers.
+
+---
+
+## 27. `git -n`
+The `-n` option simulates or previews actions without making changes. It can be useful for certain commands to avoid accidental execution.
+
+### Code Examples:
+
+```bash
+# Example 1: Preview push changes
+git push -n origin main
+
+# Example 2: Simulate branch deletion without actual removal
+git branch -d feature-branch -n
+
+# Example 3: Preview rebasing without applying changes
+git rebase -n origin/main
+```
+> **Scenario**: You want to see what will happen when running a push or branch deletion before executing it.
+
+---
+
+## 28. `git -l`
+The `-l` option is typically used with listing commands to format the output or filter results.
+
+### Code Examples:
+
+```bash
+# Example 1: List all branches
+git branch -l
+
+# Example 2: List tags with specific formatting
+git tag -l "v*"
+
+# Example 3: List files in the repository
+git ls-files -l
+```
+> **Scenario**: You need a more specific output from Git commands, like when filtering branches or tags.
+
+---
+
+## 29. `git HEAD`
+`HEAD` is a reference to the current commit or the tip of the current branch. It is commonly used for checking out specific states or reverting to previous states.
+
+### Code Examples:
+
+```bash
+# Example 1: Viewing the commit pointed to by HEAD
+git show HEAD
+
+# Example 2: Resetting to the previous commit (HEAD^)
+git reset --hard HEAD^
+
+# Example 3: Checking out the latest commit
+git checkout HEAD
+```
+> **Scenario**: You want to return to the state of the last commit or investigate the most recent changes in the branch.
+
+---
+
+## 30. `git diff`
+The `git diff` command shows changes between commits, branches, or working directory and staged changes.
+
+### Code Examples:
+
+```bash
+# Example 1: Showing unstaged changes in the working directory
+git diff
+
+# Example 2: Comparing differences between two branches
+git diff main feature-branch
+
+# Example 3: Viewing changes between a commit and the working directory
+git diff <commit-sha>
+```
+> **Scenario**: After making changes, you want to see the difference between your current state and the last commit or another branch.
 
 ---
 Author: Kodebae
@@ -324,10 +614,6 @@ The repository includes directories for each chapter and video in the course. Yo
 ### Instructor
 
 Kevin Skoglund 
-                            
-
-
-                            
 
 Check out my other courses on [LinkedIn Learning](https://www.linkedin.com/learning/instructors/kevin-skoglund).
 
